@@ -6,7 +6,7 @@ import Sessions from "./Sessions";
 
 @Entity("users")
 export default class Users extends BaseEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     	id: string;
 
     @Column()
