@@ -42,4 +42,16 @@ export default class Users extends BaseEntity {
     	await newUser.save();
     	return newUser;
     }
+
+    static async findUser(userName: string, password: string) {
+    	const user = await this.findOne({
+    		where: {
+    			userName
+    		}
+    	});
+
+    	if (user && bcrypt.compareSync(password, user.password)) return user;
+
+    	return null;
+    }
 }

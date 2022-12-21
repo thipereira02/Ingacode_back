@@ -3,6 +3,7 @@ import cors from "cors";
 import { AppDataSource } from "./data-source";
 
 import usersRouter from "./routers/usersRouter";
+import authRouter from "./routers/authRouter";
 import { errorMiddleware } from "./middlewares/error";
 
 AppDataSource.initialize().then(() => {
@@ -11,6 +12,7 @@ AppDataSource.initialize().then(() => {
 	app.use(express.json());
 
 	app.use(usersRouter);
+	app.use(authRouter);
 	app.use(errorMiddleware);
 
 	return app.listen(Number(process.env.PORT), () => {
