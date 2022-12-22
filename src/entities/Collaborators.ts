@@ -3,7 +3,6 @@ import casual from "casual";
 import { ConflictError } from "../helpers/apiErrors";
 
 import Users from "./Users";
-import { string } from "joi";
 
 @Entity("collaborators")
 export default class Collaborators extends BaseEntity {
@@ -50,5 +49,15 @@ export default class Collaborators extends BaseEntity {
 	    	}
     	});
     	return collaborators;
+    }
+
+    static async updateCollaborator(id: string, name: string) {
+    	const collaborator = await this.findOne({ where: { id } });
+    	if (!collaborator) throw new ConflictError("Collaborator does not exist.");
+
+    	await this.update({ id }, {
+    		name,
+    		updatedAt: new Date().toISOString()
+    	});
     }
 }

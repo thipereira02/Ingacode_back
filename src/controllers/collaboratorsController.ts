@@ -23,3 +23,16 @@ export async function getUserCollaborators(req: Request, res: Response, next: Ne
 		next(error);
 	}
 }
+
+export async function updateCollaborator(req: Request, res: Response, next: NextFunction) {
+	try{
+		const { name } = req.body as { name: string };
+		const { id } = req.params as { id: string };
+	
+		await collaboratorsService.updateCollaborator(id, name);
+	
+		return res.sendStatus(200);
+	} catch (error) {
+		next(error);
+	}
+}

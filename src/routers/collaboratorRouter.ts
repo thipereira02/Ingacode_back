@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post("/new-collaborator", authMiddleware, collaboratorController.createCollaborator);
 router.get("/my-collaborators", authMiddleware, collaboratorController.getUserCollaborators);
+router.post("/update-collaborator/:id", authMiddleware, collaboratorController.updateCollaborator);
 
 export default router;

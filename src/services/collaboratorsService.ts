@@ -13,3 +13,10 @@ export async function getUserCollaborators(userId: string) {
 	const collaborators = await Collaborators.findUserCollaborators(userId);
 	return collaborators;
 }
+
+export async function updateCollaborator(id: string, name: string) {
+	const isValid = CollaboratorSchema.validate({ name });
+	if (isValid.error !== undefined) throw new BadRequestError("Invalid data.");
+
+	await Collaborators.updateCollaborator(id, name);
+}
