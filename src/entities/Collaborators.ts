@@ -3,6 +3,7 @@ import casual from "casual";
 import { ConflictError } from "../helpers/apiErrors";
 
 import Users from "./Users";
+import { string } from "joi";
 
 @Entity("collaborators")
 export default class Collaborators extends BaseEntity {
@@ -24,6 +25,9 @@ export default class Collaborators extends BaseEntity {
     @Column()
     	userId: string;
 
+	@Column()
+		wasDeleted: boolean;
+
     @ManyToOne(() => Users, user => user.collaborators)
     	user: Users;
 
@@ -36,5 +40,15 @@ export default class Collaborators extends BaseEntity {
     	const newCollaborator = this.create({ id: uuid, name, userId });
     	await newCollaborator.save();
     	return newCollaborator;
+    }
+
+    static async findUserCollaborators(userId: string) {
+    	const collaborators = await this.find({ 
+    		where: { 
+    			userId,
+    			wasDeleted: false
+	    	}
+    	});
+    	return collaborators;
     }
 }

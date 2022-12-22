@@ -6,5 +6,6 @@ import authMiddleware from "../middlewares/tokenValidation";
 const router = express.Router();
 
 router.post("/new-collaborator", authMiddleware, collaboratorController.createCollaborator);
+router.get("/my-collaborators", authMiddleware, collaboratorController.getUserCollaborators);
 
 export default router;

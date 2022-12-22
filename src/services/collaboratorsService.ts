@@ -8,3 +8,8 @@ export async function createCollaborator(name: string, userId: string) {
 
 	await Collaborators.createCollaborator(name, userId);
 }
+
+export async function getUserCollaborators(userId: string) {
+	const collaborators = await Collaborators.findUserCollaborators(userId);
+	return collaborators;
+}

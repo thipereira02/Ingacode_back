@@ -25,6 +25,9 @@ export default class Users extends BaseEntity {
     @Column()
     	deletedAt: string;
 
+	@Column()
+		wasDeleted: boolean;
+
     @OneToMany(() => Sessions, session => session.user)
     	sessions: Sessions[];
 

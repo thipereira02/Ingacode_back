@@ -13,3 +13,13 @@ export async function createCollaborator(req: Request, res: Response, next: Next
 		next(error);
 	}
 }
+
+export async function getUserCollaborators(req: Request, res: Response, next: NextFunction) {
+	try{
+		const collaborators = await collaboratorsService.getUserCollaborators(res.locals.user.id);
+	
+		return res.send(collaborators);
+	} catch (error) {
+		next(error);
+	}
+}
