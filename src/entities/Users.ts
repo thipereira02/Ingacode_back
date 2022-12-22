@@ -4,6 +4,7 @@ import casual from "casual";
 
 import Sessions from "./Sessions";
 import Collaborators from "./Collaborators";
+import Projects from "./Projects";
 
 @Entity("users")
 export default class Users extends BaseEntity {
@@ -33,6 +34,9 @@ export default class Users extends BaseEntity {
 
 	@OneToMany(() => Collaborators, collaborator => collaborator.user)
 		collaborators: Collaborators[];
+
+	@OneToMany(() => Projects, project => project.user)
+		projects: Projects[];
 
 	static async createUser(userName: string, password: string) {
     	const hashedPassword = bcrypt.hashSync(password, 12);
