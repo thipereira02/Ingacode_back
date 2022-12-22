@@ -61,3 +61,7 @@ export async function updateTask(name: string, description: string, projectId: s
 
 	await Tasks.updateTask(name, description, projectId, taskId);
 }
+
+export async function deleteTask(projectId: string, taskId: string) {
+	await Tasks.deleteTask(projectId, taskId);
+}

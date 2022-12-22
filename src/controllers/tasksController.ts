@@ -38,3 +38,15 @@ export async function updateTask(req: Request, res: Response, next: NextFunction
 		next(error);
 	}
 }
+
+export async function deleteTask(req: Request, res: Response, next: NextFunction) {
+	try{
+		const { projectId, taskId } = req.params as { projectId: string, taskId: string };
+
+		await tasksService.deleteTask(projectId, taskId);
+
+		return res.sendStatus(200);
+	} catch (error) {
+		next(error);
+	}
+}

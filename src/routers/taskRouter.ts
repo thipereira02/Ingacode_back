@@ -8,5 +8,6 @@ const router = express.Router();
 router.post("/new-task", authMiddleware, tasksController.createTask);
 router.get("/get-tasks/:projectId", authMiddleware, tasksController.getTasks);
 router.post("/update-task/:taskId", authMiddleware, tasksController.updateTask);
+router.post("/delete-task/:projectId/:taskId", authMiddleware, tasksController.deleteTask);
 
 export default router;

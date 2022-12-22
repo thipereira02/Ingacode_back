@@ -63,4 +63,15 @@ export default class Tasks extends BaseEntity {
     		updatedAt: new Date().toISOString()
     	});
     }
+
+    static async deleteTask(projectId: string, taskId: string) {
+    	const task = await this.findOne({ where: { id: taskId, projectId } });
+    	if (!task) throw new NotFoundError("Task not found.");
+
+    	await this.update({ id: taskId
+    	}, {
+    		wasDeleted: true,
+    		deletedAt: new Date().toISOString()
+    	});
+    }
 }
