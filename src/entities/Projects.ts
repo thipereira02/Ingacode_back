@@ -40,4 +40,14 @@ export default class Projects extends BaseEntity {
     	await newProject.save();
     	return newProject;
     }
+
+    static async findUserProjects(userId: string) {
+    	const projects = await this.find({ 
+    		where: { 
+    			userId,
+    			wasDeleted: false
+    		} 
+    	});
+    	return projects;
+    }
 }

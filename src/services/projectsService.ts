@@ -17,3 +17,8 @@ export async function createProject(name: string, userId: string) {
 
 	await Projects.createProject(name, userId);
 }
+
+export async function getProjects(userId: string) {
+	const projects = await Projects.findUserProjects(userId);
+	return projects;
+}

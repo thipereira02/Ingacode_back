@@ -13,3 +13,13 @@ export async function createProject(req: Request, res: Response, next: NextFunct
 		next(error);
 	}
 }
+
+export async function getProjects(req: Request, res: Response, next: NextFunction) {
+	try{
+		const projects = await projectsService.getProjects(res.locals.user.id);
+
+		return res.send(projects);
+	} catch (error) {
+		next(error);
+	}
+}
