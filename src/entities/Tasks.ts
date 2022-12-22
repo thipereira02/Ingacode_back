@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
-import { ConflictError } from "../helpers/apiErrors";
+import { ConflictError, NotFoundError } from "../helpers/apiErrors";
 import casual from "casual";
 
 import Projects from "./Projects";
@@ -51,5 +51,16 @@ export default class Tasks extends BaseEntity {
     	} 
     	});
     	return tasks;
+    }
+
+    static async updateTask(name: string, description: string, projectId: string, taskId: string) {
+    	const task = await this.findOne({ where: { id: taskId, projectId } });
+    	if (!task) throw new NotFoundError("Task not found.");
+
+    	await this.update({ id: taskId }, { 
+    		name, 
+    		description,
+    		updatedAt: new Date().toISOString()
+    	});
     }
 }
