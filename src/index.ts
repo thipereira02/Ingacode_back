@@ -6,6 +6,7 @@ import usersRouter from "./routers/usersRouter";
 import authRouter from "./routers/authRouter";
 import collaboratorRouter from "./routers/collaboratorRouter";
 import projectRouter from "./routers/projectRouter";
+import taskRouter from "./routers/taskRouter";
 import { errorMiddleware } from "./middlewares/error";
 
 AppDataSource.initialize().then(() => {
@@ -17,6 +18,7 @@ AppDataSource.initialize().then(() => {
 	app.use(authRouter);
 	app.use(collaboratorRouter);
 	app.use(projectRouter);
+	app.use(taskRouter);
 	app.use(errorMiddleware);
 
 	return app.listen(Number(process.env.PORT), () => {

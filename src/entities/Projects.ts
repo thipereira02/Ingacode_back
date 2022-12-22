@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne, OneToMany } from "typeorm";
 import casual from "casual";
 import { ConflictError, NotFoundError } from "../helpers/apiErrors";
 
 import Users from "./Users";
+import Tasks from "./Tasks";
 
 @Entity("projects")
 export default class Projects extends BaseEntity {
@@ -29,6 +30,9 @@ export default class Projects extends BaseEntity {
 
     @ManyToOne(() => Users, user => user.projects)
     	user: Users;
+
+    @OneToMany(() => Tasks, task => task.project)
+    	tasks: Tasks[];
 
     static async createProject(name: string, userId: string) {
     	const uuid = casual.uuid;
