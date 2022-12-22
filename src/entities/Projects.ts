@@ -59,6 +59,15 @@ export default class Projects extends BaseEntity {
     		name,
     		updatedAt: new Date().toISOString()
     	});
-        
+    }
+
+    static async deleteProject(id: string) {
+    	const project = await this.findOne({ where: { id } });
+    	if (!project) throw new NotFoundError("Project does not exist.");
+
+    	await this.update({ id }, {
+    		deletedAt: new Date().toISOString(),
+    		wasDeleted: true
+    	});
     }
 }

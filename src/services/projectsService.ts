@@ -38,3 +38,7 @@ export async function updateProject(id: string, name: string) {
 
 	await Projects.updateProject(id, name);
 }
+
+export async function deleteProject(id: string) {
+	await Projects.deleteProject(id);
+}

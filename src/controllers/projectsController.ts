@@ -36,3 +36,15 @@ export async function updateProject(req: Request, res: Response, next: NextFunct
 		next(error);
 	}
 }
+
+export async function deleteProject(req: Request, res: Response, next: NextFunction) {
+	try{
+		const { id } = req.params as { id: string };
+
+		await projectsService.deleteProject(id);
+
+		return res.sendStatus(200);
+	} catch (error) {
+		next(error);
+	}
+}
