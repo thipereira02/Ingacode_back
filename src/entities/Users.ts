@@ -49,7 +49,7 @@ export default class Users extends BaseEntity {
     	});
     	if (userNameExists) return false;
 
-    	const newUser = this.create({ id: uuid, userName, password: hashedPassword });
+    	const newUser = this.create({ id: uuid, userName, password: hashedPassword, createdAt: new Date().toISOString() });
     	await newUser.save();
     	return newUser;
 	}

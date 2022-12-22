@@ -36,7 +36,7 @@ export default class Collaborators extends BaseEntity {
     	const collaboratorAlreadyExists = await this.findOne({ where: { name, userId } });
     	if (collaboratorAlreadyExists) throw new ConflictError("Collaborator already exists.");
 
-    	const newCollaborator = this.create({ id: uuid, name, userId });
+    	const newCollaborator = this.create({ id: uuid, name, userId, createdAt: new Date().toISOString() });
     	await newCollaborator.save();
     	return newCollaborator;
     }

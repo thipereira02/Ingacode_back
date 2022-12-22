@@ -39,7 +39,7 @@ export default class Tasks extends BaseEntity {
 
     	const uuid = casual.uuid;
 
-    	const newTask = this.create({ id: uuid, name, description, projectId });
+    	const newTask = this.create({ id: uuid, name, description, projectId, createdAt: new Date().toISOString() });
     	await newTask.save();
     	return newTask;
     }

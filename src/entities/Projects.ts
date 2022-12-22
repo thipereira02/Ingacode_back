@@ -40,7 +40,7 @@ export default class Projects extends BaseEntity {
     	const projectAlreadyExists = await this.findOne({ where: { name, userId } });
     	if (projectAlreadyExists) throw new ConflictError("Project already exists.");
 
-    	const newProject = this.create({ id: uuid, name, userId });
+    	const newProject = this.create({ id: uuid, name, userId, createdAt: new Date().toISOString() });
     	await newProject.save();
     	return newProject;
     }
