@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne, OneToMany } from "typeorm";
 import { ConflictError, NotFoundError } from "../helpers/apiErrors";
 import casual from "casual";
 
 import Projects from "./Projects";
+import TimeTrackers from "./TimeTrackers";
 
 @Entity("tasks")
 export default class Tasks extends BaseEntity {
@@ -32,6 +33,9 @@ export default class Tasks extends BaseEntity {
     
     @ManyToOne(() => Projects, project => project.tasks)
     	project: Projects;
+
+    @OneToMany(() => TimeTrackers, timeTracker => timeTracker.task)
+    	timeTrackers: TimeTrackers[];
 
     static async createTask(name: string, description: string, projectId: string) {
     	const taskAlreadyExists = await this.findOne({ where: { name, projectId } });

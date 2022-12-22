@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne, OneToMany } from "typeorm";
 import casual from "casual";
 import { ConflictError, NotFoundError } from "../helpers/apiErrors";
 
 import Users from "./Users";
+import TimeTrackers from "./TimeTrackers";
 
 @Entity("collaborators")
 export default class Collaborators extends BaseEntity {
@@ -30,7 +31,10 @@ export default class Collaborators extends BaseEntity {
     @ManyToOne(() => Users, user => user.collaborators)
     	user: Users;
 
-    static async createCollaborator(name: string, userId: string) {
+	@OneToMany(() => TimeTrackers, timeTracker => timeTracker.collaborator)
+		timeTrackers: TimeTrackers[];
+
+	static async createCollaborator(name: string, userId: string) {
     	const uuid = casual.uuid;
 
     	const collaboratorAlreadyExists = await this.findOne({ where: { name, userId } });
@@ -39,9 +43,9 @@ export default class Collaborators extends BaseEntity {
     	const newCollaborator = this.create({ id: uuid, name, userId, createdAt: new Date().toISOString() });
     	await newCollaborator.save();
     	return newCollaborator;
-    }
+	}
 
-    static async findUserCollaborators(userId: string) {
+	static async findUserCollaborators(userId: string) {
     	const collaborators = await this.find({ 
     		where: { 
     			userId,
@@ -49,9 +53,9 @@ export default class Collaborators extends BaseEntity {
 	    	}
     	});
     	return collaborators;
-    }
+	}
 
-    static async updateCollaborator(id: string, name: string) {
+	static async updateCollaborator(id: string, name: string) {
     	const collaborator = await this.findOne({ where: { id } });
     	if (!collaborator) throw new NotFoundError("Collaborator does not exist.");
 
@@ -59,9 +63,9 @@ export default class Collaborators extends BaseEntity {
     		name,
     		updatedAt: new Date().toISOString()
     	});
-    }
+	}
 
-    static async deleteCollaborator(id: string) {
+	static async deleteCollaborator(id: string) {
     	const collaborator = await this.findOne({ where: { id } });
     	if (!collaborator) throw new NotFoundError("Collaborator does not exist.");
 
@@ -69,5 +73,5 @@ export default class Collaborators extends BaseEntity {
     		wasDeleted: true,
     		deletedAt: new Date().toISOString()
     	});
-    }
+	}
 }
