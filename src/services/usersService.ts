@@ -19,6 +19,4 @@ export async function createUser(userName: string, password: string) {
 
 	const user = await Users.createUser( userName, password );
 	if (!user) throw new ConflictError("Username already exists.");
-
-	return user;
 }

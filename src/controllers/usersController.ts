@@ -8,7 +8,7 @@ export async function createUser(req: Request, res: Response, next: NextFunction
 		
 		await usersService.createUser(userName, password);
 		
-		return res.status(201);
+		return res.sendStatus(201);
 	} catch (error) {
 		next(error);
 	}

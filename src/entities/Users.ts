@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import casual from "casual";
 
 import Sessions from "./Sessions";
+import Collaborators from "./Collaborators";
 
 @Entity("users")
 export default class Users extends BaseEntity {
@@ -27,7 +28,10 @@ export default class Users extends BaseEntity {
     @OneToMany(() => Sessions, session => session.user)
     	sessions: Sessions[];
 
-    static async createUser(userName: string, password: string) {
+	@OneToMany(() => Collaborators, collaborator => collaborator.user)
+		collaborators: Collaborators[];
+
+	static async createUser(userName: string, password: string) {
     	const hashedPassword = bcrypt.hashSync(password, 12);
     	const uuid = casual.uuid;
 
@@ -41,9 +45,9 @@ export default class Users extends BaseEntity {
     	const newUser = this.create({ id: uuid, userName, password: hashedPassword });
     	await newUser.save();
     	return newUser;
-    }
+	}
 
-    static async findUser(userName: string, password: string) {
+	static async findUser(userName: string, password: string) {
     	const user = await this.findOne({
     		where: {
     			userName
@@ -53,5 +57,5 @@ export default class Users extends BaseEntity {
     	if (user && bcrypt.compareSync(password, user.password)) return user;
 
     	return null;
-    }
+	}
 }

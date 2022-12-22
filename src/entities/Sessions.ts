@@ -1,4 +1,3 @@
-
 import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
 import jwt from "jsonwebtoken";
 import casual from "casual";
