@@ -29,3 +29,8 @@ export async function createTask(name: string, description: string, projectId: s
 
 	await Tasks.createTask(name, description, projectId);
 }
+
+export async function getTasks(projectId: string) {
+	const tasks = await Tasks.findTasks(projectId);
+	return tasks;
+}

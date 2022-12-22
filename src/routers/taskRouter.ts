@@ -6,5 +6,6 @@ import authMiddleware from "../middlewares/tokenValidation";
 const router = express.Router();
 
 router.post("/new-task", authMiddleware, tasksController.createTask);
+router.get("/get-tasks/:projectId", authMiddleware, tasksController.getTasks);
 
 export default router;

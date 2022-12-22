@@ -13,3 +13,15 @@ export async function createTask(req: Request, res: Response, next: NextFunction
 		next(error);
 	}
 }
+
+export async function getTasks(req: Request, res: Response, next: NextFunction) {
+	try{
+		const { projectId } = req.params as { projectId: string };
+
+		const tasks = await tasksService.getTasks(projectId);
+
+		return res.send(tasks);
+	} catch (error) {
+		next(error);
+	}
+}
