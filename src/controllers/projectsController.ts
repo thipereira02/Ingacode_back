@@ -23,3 +23,16 @@ export async function getProjects(req: Request, res: Response, next: NextFunctio
 		next(error);
 	}
 }
+
+export async function updateProject(req: Request, res: Response, next: NextFunction) {
+	try{
+		const { name } = req.body as { name: string };
+		const { id } = req.params as { id: string };
+
+		await projectsService.updateProject(id, name);
+
+		return res.sendStatus(200);
+	} catch (error) {
+		next(error);
+	}
+}
