@@ -20,3 +20,7 @@ export async function updateCollaborator(id: string, name: string) {
 
 	await Collaborators.updateCollaborator(id, name);
 }
+
+export async function deleteCollaborator(id: string) {
+	await Collaborators.deleteCollaborator(id);
+}

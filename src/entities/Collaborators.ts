@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
 import casual from "casual";
-import { ConflictError } from "../helpers/apiErrors";
+import { ConflictError, NotFoundError } from "../helpers/apiErrors";
 
 import Users from "./Users";
 
@@ -53,11 +53,21 @@ export default class Collaborators extends BaseEntity {
 
     static async updateCollaborator(id: string, name: string) {
     	const collaborator = await this.findOne({ where: { id } });
-    	if (!collaborator) throw new ConflictError("Collaborator does not exist.");
+    	if (!collaborator) throw new NotFoundError("Collaborator does not exist.");
 
     	await this.update({ id }, {
     		name,
     		updatedAt: new Date().toISOString()
+    	});
+    }
+
+    static async deleteCollaborator(id: string) {
+    	const collaborator = await this.findOne({ where: { id } });
+    	if (!collaborator) throw new NotFoundError("Collaborator does not exist.");
+
+    	await this.update({ id }, {
+    		wasDeleted: true,
+    		deletedAt: new Date().toISOString()
     	});
     }
 }

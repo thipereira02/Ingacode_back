@@ -36,3 +36,15 @@ export async function updateCollaborator(req: Request, res: Response, next: Next
 		next(error);
 	}
 }
+
+export async function deleteCollaborator(req: Request, res: Response, next: NextFunction) {
+	try{
+		const { id } = req.params as { id: string };
+	
+		await collaboratorsService.deleteCollaborator(id);
+	
+		return res.sendStatus(200);
+	} catch (error) {
+		next(error);
+	}
+}
