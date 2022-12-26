@@ -38,7 +38,7 @@ export default class Projects extends BaseEntity {
     	const uuid = casual.uuid;
 
     	const projectAlreadyExists = await this.findOne({ where: { name, userId } });
-    	if (projectAlreadyExists) throw new ConflictError("Project already exists.");
+    	if (projectAlreadyExists) throw new ConflictError("Projeto já existe.");
 
     	const newProject = this.create({ id: uuid, name, userId, createdAt: new Date().toISOString() });
     	await newProject.save();
@@ -57,7 +57,7 @@ export default class Projects extends BaseEntity {
 
     static async updateProject(id: string, name: string) {
     	const project = await this.findOne({ where: { id } });
-    	if (!project) throw new NotFoundError("Project does not exist.");
+    	if (!project) throw new NotFoundError("Projeto já existe.");
 
     	await this.update({ id }, {
     		name,
@@ -67,7 +67,7 @@ export default class Projects extends BaseEntity {
 
     static async deleteProject(id: string) {
     	const project = await this.findOne({ where: { id } });
-    	if (!project) throw new NotFoundError("Project does not exist.");
+    	if (!project) throw new NotFoundError("Projeto não encontrado.");
 
     	await this.update({ id }, {
     		deletedAt: new Date().toISOString(),

@@ -62,10 +62,10 @@ export default class Users extends BaseEntity {
     		}
     	});
 
-		if (!user) throw new NotFoundError("User not found.");
+		if (!user) throw new NotFoundError("Usuário não encontrado.");
 
 		const checkPassword = bcrypt.compareSync(password, user.password);
     	if (checkPassword) return user;
-		else throw new UnauthorizedError("Incorrect password.");
+		else throw new UnauthorizedError("Senha incorreta.");
 	}
 }

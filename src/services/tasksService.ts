@@ -9,20 +9,20 @@ export async function createTask(name: string, description: string, projectId: s
 		if (isValid.error.details[0].context?.key === "name") {
 			switch (isValid.error.details[0].type) {
 			case "string.min":
-				throw new BadRequestError("Name must be at least 3 characters long.");
+				throw new BadRequestError("Nome deve ter pelo menos 3 caracteres.");
 			case "string.max":
-				throw new BadRequestError("Name must be at most 250 characters long.");
+				throw new BadRequestError("Name deve ter no máximo 250 caracteres.");
 			default:
-				throw new BadRequestError("Invalid data.");
+				throw new BadRequestError("Dados inválidos.");
 			}
 		} else if (isValid.error.details[0].context?.key === "description") {
 			switch (isValid.error.details[0].type) {
 			case "string.min":
-				throw new BadRequestError("Description must be at least 3 characters long.");
+				throw new BadRequestError("Descrição deve ter pelo menos 3 caracteres.");
 			case "string.max":
-				throw new BadRequestError("Description must be at most 65535 characters long.");
+				throw new BadRequestError("Descrição deve ter no máximo 65535 caracteres.");
 			default:
-				throw new BadRequestError("Invalid data.");
+				throw new BadRequestError("Dados inválidos.");
 			}
 		}
 	}
@@ -41,20 +41,20 @@ export async function updateTask(name: string, description: string, projectId: s
 		if (isValid.error.details[0].context?.key === "name") {
 			switch (isValid.error.details[0].type) {
 			case "string.min":
-				throw new BadRequestError("Name must be at least 3 characters long.");
+				throw new BadRequestError("Nome deve ter pelo menos 3 caracteres.");
 			case "string.max":
-				throw new BadRequestError("Name must be at most 250 characters long.");
+				throw new BadRequestError("Nome deve ter no máximo 250 caracteres.");
 			default:
-				throw new BadRequestError("Invalid data.");
+				throw new BadRequestError("Dados inválidos.");
 			}
 		} else if (isValid.error.details[0].context?.key === "description") {
 			switch (isValid.error.details[0].type) {
 			case "string.min":
-				throw new BadRequestError("Description must be at least 3 characters long.");
+				throw new BadRequestError("Descrição deve ter pelo menos 3 caracteres.");
 			case "string.max":
-				throw new BadRequestError("Description must be at most 65535 characters long.");
+				throw new BadRequestError("Descrição deve ter no máximo 65535 caracteres.");
 			default:
-				throw new BadRequestError("Invalid data.");
+				throw new BadRequestError("Dados inválidos.");
 			}
 		}
 	}

@@ -38,7 +38,7 @@ export default class Collaborators extends BaseEntity {
     	const uuid = casual.uuid;
 
     	const collaboratorAlreadyExists = await this.findOne({ where: { name, userId } });
-    	if (collaboratorAlreadyExists) throw new ConflictError("Collaborator already exists.");
+    	if (collaboratorAlreadyExists) throw new ConflictError("Colaborador já existe.");
 
     	const newCollaborator = this.create({ id: uuid, name, userId, createdAt: new Date().toISOString() });
     	await newCollaborator.save();
@@ -57,7 +57,7 @@ export default class Collaborators extends BaseEntity {
 
 	static async updateCollaborator(id: string, name: string) {
     	const collaborator = await this.findOne({ where: { id } });
-    	if (!collaborator) throw new NotFoundError("Collaborator does not exist.");
+    	if (!collaborator) throw new NotFoundError("Colaborador não encontrado.");
 
     	await this.update({ id }, {
     		name,
@@ -67,7 +67,7 @@ export default class Collaborators extends BaseEntity {
 
 	static async deleteCollaborator(id: string) {
     	const collaborator = await this.findOne({ where: { id } });
-    	if (!collaborator) throw new NotFoundError("Collaborator does not exist.");
+    	if (!collaborator) throw new NotFoundError("Colaborador não encontrado.");
 
     	await this.update({ id }, {
     		wasDeleted: true,

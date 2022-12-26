@@ -7,11 +7,11 @@ export async function createProject(name: string, userId: string) {
 	if (isValid.error !== undefined) {
 		switch (isValid.error.details[0].type) {
 		case "string.min":
-			throw new BadRequestError("Project name must be at least 3 characters long.");
+			throw new BadRequestError("Nome do projeto deve ter pelo menos 3 caracteres.");
 		case "string.max":
-			throw new BadRequestError("Project name must be at most 250 characters long.");
+			throw new BadRequestError("Nome do projeto deve ter no máximo 250 caracteres.");
 		default:
-			throw new BadRequestError("Invalid data.");
+			throw new BadRequestError("Dados inválidos.");
 		}
 	}
 
@@ -28,11 +28,11 @@ export async function updateProject(id: string, name: string) {
 	if (isValid.error !== undefined) {
 		switch (isValid.error.details[0].type) {
 		case "string.min":
-			throw new BadRequestError("Project name must be at least 3 characters long.");
+			throw new BadRequestError("Nome do projeto deve ter pelo menos 3 caracteres.");
 		case "string.max":
-			throw new BadRequestError("Project name must be at most 250 characters long.");
+			throw new BadRequestError("Nome do projeto deve ter no máximo 250 caracteres.");
 		default:
-			throw new BadRequestError("Invalid data.");
+			throw new BadRequestError("Dados inválidos.");
 		}
 	}
 

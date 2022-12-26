@@ -7,16 +7,16 @@ export async function createUser(userName: string, password: string) {
 	if (isValid.error !== undefined) {
 		switch (isValid.error.details[0].type) {
 		case "string.min":
-			throw new BadRequestError("Username must be at least 3 characters long.");
+			throw new BadRequestError("Username deve ter pelo menos 3 caracteres.");
 		case "string.max":
-			throw new BadRequestError("Username must be at most 250 characters long.");
+			throw new BadRequestError("Username pode ter no máximo 250 caracteres.");
 		case "string.pattern.base":
-			throw new BadRequestError("Password must be at least 8 characters long and contain at least one uppercase letter and one number.");
+			throw new BadRequestError("Password deve ter pelo menos 8 caracteres e conter pelo menos uma letra maiúscula e um número.");
 		default:
-			throw new BadRequestError("Invalid data.");
+			throw new BadRequestError("Dados inválidos.");
 		}
 	}
 
 	const user = await Users.createUser( userName, password );
-	if (!user) throw new ConflictError("Username already exists.");
+	if (!user) throw new ConflictError("Username já está em uso.");
 }

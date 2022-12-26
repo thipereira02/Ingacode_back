@@ -7,11 +7,11 @@ export async function createCollaborator(name: string, userId: string) {
 	if (isValid.error !== undefined) {
 		switch (isValid.error.details[0].type) {
 		case "string.min":
-			throw new BadRequestError("Collaborator name must be at least 3 characters long.");
+			throw new BadRequestError("Nome do colaborador deve ter pelo menos 3 caracteres.");
 		case "string.max":
-			throw new BadRequestError("Collaborator name must be at most 250 characters long.");
+			throw new BadRequestError("Nome do colaborador deve ter no máximo 250 caracteres.");
 		default:
-			throw new BadRequestError("Invalid data.");
+			throw new BadRequestError("Dados inválidos.");
 		}
 	}
 
@@ -25,7 +25,7 @@ export async function getUserCollaborators(userId: string) {
 
 export async function updateCollaborator(id: string, name: string) {
 	const isValid = CollaboratorSchema.validate({ name });
-	if (isValid.error !== undefined) throw new BadRequestError("Invalid data.");
+	if (isValid.error !== undefined) throw new BadRequestError("Dados inválidos.");
 
 	await Collaborators.updateCollaborator(id, name);
 }
