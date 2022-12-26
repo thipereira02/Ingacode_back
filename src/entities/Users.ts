@@ -5,6 +5,7 @@ import casual from "casual";
 import Sessions from "./Sessions";
 import Collaborators from "./Collaborators";
 import Projects from "./Projects";
+import { NotFoundError, UnauthorizedError } from "../helpers/apiErrors";
 
 @Entity("users")
 export default class Users extends BaseEntity {
@@ -61,8 +62,10 @@ export default class Users extends BaseEntity {
     		}
     	});
 
-    	if (user && bcrypt.compareSync(password, user.password)) return user;
+		if (!user) throw new NotFoundError("User not found.");
 
-    	return null;
+		const checkPassword = bcrypt.compareSync(password, user.password);
+    	if (checkPassword) return user;
+		else throw new UnauthorizedError("Incorrect password.");
 	}
 }
