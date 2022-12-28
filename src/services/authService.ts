@@ -4,9 +4,11 @@ import Sessions from "../entities/Sessions";
 export async function login(userName: string, password: string) {
 	const user = await Users.findUser(userName, password);
 
-	const token = await Sessions.createSession(user.id);
+	const session = await Sessions.createSession(user.id);
 	return {
-		token,
+		id: session.id,
+		userId: user.id,
+		token: session.token,
 		userName: user.userName,
 	};
 }

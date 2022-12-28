@@ -50,7 +50,10 @@ export default class Projects extends BaseEntity {
     		where: { 
     			userId,
     			wasDeleted: false
-    		} 
+    		},
+    		order: {
+    			createdAt: "DESC"
+    		}
     	});
     	return projects;
     }
