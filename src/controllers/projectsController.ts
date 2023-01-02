@@ -27,9 +27,9 @@ export async function getProjects(req: Request, res: Response, next: NextFunctio
 export async function updateProject(req: Request, res: Response, next: NextFunction) {
 	try{
 		const { name } = req.body as { name: string };
-		const { id } = req.params as { id: string };
+		const { projectId } = req.params as { projectId: string };
 
-		await projectsService.updateProject(id, name);
+		await projectsService.updateProject(projectId, name);
 
 		return res.sendStatus(200);
 	} catch (error) {
@@ -39,9 +39,9 @@ export async function updateProject(req: Request, res: Response, next: NextFunct
 
 export async function deleteProject(req: Request, res: Response, next: NextFunction) {
 	try{
-		const { id } = req.params as { id: string };
+		const { projectId } = req.params as { projectId: string };
 
-		await projectsService.deleteProject(id);
+		await projectsService.deleteProject(projectId);
 
 		return res.sendStatus(200);
 	} catch (error) {

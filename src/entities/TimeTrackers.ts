@@ -1,4 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
+import { NotFoundError } from "../helpers/apiErrors";
+import casual from "casual";
 
 import Tasks from "./Tasks";
 import Collaborators from "./Collaborators";
@@ -40,4 +42,27 @@ export default class TimeTrackers extends BaseEntity {
 
     @ManyToOne(() => Collaborators, collaborator => collaborator.timeTrackers)
     	collaborator: Collaborators;
+
+    static async createTimeTracker(startDate: string, endDate: string, timeZoneId: string, taskId: string, collaboratorId: string) {
+    	if (collaboratorId) {	
+    		const collaboratorExists = await Collaborators.findOne({ where: { id: collaboratorId }});
+    		if (!collaboratorExists) throw new NotFoundError("Colaborador não encontrado.");
+    	}
+		
+    	const taskExists = await Tasks.findOne({ where: { id: taskId }});
+    	if (!taskExists) throw new NotFoundError("Task não encontrada.");
+		
+    	const uuid = casual.uuid;
+    	const newTimeTracker = this.create({ 
+    		id: uuid, 
+    		startDate, 
+    		endDate, 
+    		timeZoneId, 
+    		taskId, 
+    		collaboratorId, 
+    		createdAt: new Date().toISOString() 
+    	});
+    	await newTimeTracker.save();
+    	return newTimeTracker;
+    }
 }
