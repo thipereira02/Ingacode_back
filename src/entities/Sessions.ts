@@ -27,4 +27,8 @@ export default class Sessions extends BaseEntity {
     	await newSession.save();
     	return newSession;
     }
+
+    static async deleteSession(token: string) {
+    	await this.delete({ token });
+    }
 }

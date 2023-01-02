@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
-import { NotFoundError, ConflictError } from "../helpers/apiErrors";
+import { NotFoundError } from "../helpers/apiErrors";
 import casual from "casual";
 
 import Tasks from "./Tasks";

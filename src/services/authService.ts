@@ -12,3 +12,7 @@ export async function login(userName: string, password: string) {
 		userName: user.userName,
 	};
 }
+
+export async function logout(token: string) {
+	await Sessions.deleteSession(token);
+}

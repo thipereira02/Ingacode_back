@@ -13,3 +13,15 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 		next(error);
 	}
 }
+
+export async function logout(req: Request, res: Response, next: NextFunction) {
+	try{
+		const { token } = req.body as { token: string };
+		
+		await authService.logout(token);
+		
+		return res.sendStatus(200);
+	} catch (error) {
+		next(error);
+	}
+}

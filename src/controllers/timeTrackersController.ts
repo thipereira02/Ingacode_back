@@ -4,7 +4,7 @@ import * as timeTrackersService from "../services/timeTrackersService";
 
 export async function createTimeTracker(req: Request, res: Response, next: NextFunction) {
 	try{
-		const { startDate, endDate, timeZoneId, collaboratorId } = req.body as { startDate: string, endDate: string, timeZoneId: string, collaboratorId: any };
+		const { startDate, endDate, timeZoneId, collaboratorId } = req.body as { startDate: string, endDate: string, timeZoneId: string, collaboratorId: string | null };
 		const { taskId } = req.params as { taskId: string };
 		
 		await timeTrackersService.createTimeTracker(startDate, endDate, timeZoneId, taskId, collaboratorId);
