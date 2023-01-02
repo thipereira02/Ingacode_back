@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Entity, PrimaryGeneratedColumn, BaseEntity, Column, ManyToOne } from "typeorm";
-import { NotFoundError } from "../helpers/apiErrors";
+import { NotFoundError, ConflictError } from "../helpers/apiErrors";
 import casual from "casual";
 
 import Tasks from "./Tasks";
@@ -43,15 +44,10 @@ export default class TimeTrackers extends BaseEntity {
     @ManyToOne(() => Collaborators, collaborator => collaborator.timeTrackers)
     	collaborator: Collaborators;
 
-    static async createTimeTracker(startDate: string, endDate: string, timeZoneId: string, taskId: string, collaboratorId: string) {
-    	if (collaboratorId) {	
-    		const collaboratorExists = await Collaborators.findOne({ where: { id: collaboratorId }});
-    		if (!collaboratorExists) throw new NotFoundError("Colaborador não encontrado.");
-    	}
-		
+    static async createTimeTracker(startDate: string, endDate: string, timeZoneId: string, taskId: string, collaboratorId: any) {
     	const taskExists = await Tasks.findOne({ where: { id: taskId }});
     	if (!taskExists) throw new NotFoundError("Task não encontrada.");
-		
+
     	const uuid = casual.uuid;
     	const newTimeTracker = this.create({ 
     		id: uuid, 
@@ -64,5 +60,15 @@ export default class TimeTrackers extends BaseEntity {
     	});
     	await newTimeTracker.save();
     	return newTimeTracker;
+    }
+
+    static async getTaskTimeTrackers(taskId: string) {
+    	const timeTrackers = await this.find({ 
+    		where: { 
+    			taskId
+    		},
+    		relations: ["collaborator"]
+    	});
+    	return timeTrackers;
     }
 }

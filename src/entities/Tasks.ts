@@ -49,9 +49,13 @@ export default class Tasks extends BaseEntity {
     }
 
     static async findTasks(projectId: string) {
-    	const tasks = await this.find({ where: { 
-    		projectId
-    	} 
+    	const tasks = await this.find({ 
+    		where: { 
+    			projectId
+    		},
+    		relations: {
+    			timeTrackers: true
+    		}
     	});
     	return tasks;
     }
